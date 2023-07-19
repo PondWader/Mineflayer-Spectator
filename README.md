@@ -3,6 +3,12 @@
 Spectate your [Mineflayer](https://github.com/prismarinejs/mineflayer) bot in-game.  
 **Please note:** This project only aims to support the latest version of Minecraft (at time of writing this is 1.20.1)
 
+# Installing
+Run:
+```
+npm i mineflayer-spectator
+```
+
 # Example usage
 
 ```js
