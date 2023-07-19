@@ -1,0 +1,22 @@
+{
+  "name": "mineflayer-spectator",
+  "version": "0.0.1",
+  "description": "Spectate a mineflayer bot in-game",
+  "main": "dist",
+  "types": "./dist/index.d.ts",
+  "repository": "https://github.com/PondWader/Mineflayer-Spectator",
+  "author": "PondWader",
+  "license": "MIT",
+  "devDependencies": {
+    "mineflayer": "^4.10.1",
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "minecraft-protocol": "^1.43.2",
+    "prismarine-chat": "^1.8.0"
+  },
+  "scripts": {
+    "prepublish": "tsc"
+  }
+}
