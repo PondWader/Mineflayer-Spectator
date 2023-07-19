@@ -36,7 +36,7 @@ If you run a command that is not registered as a spectator command, it will be r
 You can also register your own commands!
 
 # API
-### .startSpectatorServer(bot: mineflayer.Bot, options?: [StartSpectatorServerOptions](#startspectatorserverbot-mineflayerbot-options-startspectatorserveroptions)): [SpectatorServer](#spectatorserver)
+### .startSpectatorServer(bot: mineflayer.Bot, options?: [StartSpectatorServerOptions](#startspectatorserveroptions)): [SpectatorServer](#spectatorserver)
 
 Starts the spectator server with the given options. The spectator server must be started before the bots login has completed, as some data in the bot's registry needs to be populated.
 
