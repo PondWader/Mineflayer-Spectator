@@ -1,6 +1,6 @@
 {
   "name": "mineflayer-spectator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Spectate a mineflayer bot in-game",
   "main": "dist",
   "types": "./dist/index.d.ts",
@@ -8,8 +8,8 @@
   "author": "PondWader",
   "license": "MIT",
   "devDependencies": {
-    "mineflayer": "^4.10.1",
     "@types/node": "^20.4.2",
+    "mineflayer": "^4.10.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {
