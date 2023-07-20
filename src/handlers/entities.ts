@@ -160,7 +160,12 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
         data.vehicleId = alignEntityId(data.vehicleId)
         server.writeAll('attach_entity', alignEntityId(data))
     })
-    server.excludePacketFromProxy('entity_destroy', 'attach_entity')
+    bot._client.on('set_passengers', data => {
+        data = alignEntityId(data)
+        data.passengers = data.passengers.map(alignEntityId)
+        server.writeAll('set_passengers', data)
+    })
+    server.excludePacketFromProxy('entity_destroy', 'attach_entity', 'set_passengers')
 
     const EVENTS_WITH_ALIGNED_IDS = [
         'entity_velocity',
@@ -170,7 +175,6 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
         'entity_look',
         'entity_move_look',
         'entity_teleport',
-        'entity_head_rotation',
         'entity_metadata',
         'animation',
         'hurt_animation',
@@ -180,7 +184,8 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
         'entity_equipment',
         'entity_sound_effect',
         'entity_update_attributes',
-        'entity_effect'
+        'entity_effect',
+        'spawn_entity_weather'
     ]
     server.excludePacketFromProxy(...EVENTS_WITH_ALIGNED_IDS)
     for (const event of EVENTS_WITH_ALIGNED_IDS) {

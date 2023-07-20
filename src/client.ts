@@ -18,7 +18,6 @@ export async function handleClient(client: ServerClient, bot: mineflayer.Bot, se
         gameMode: 3 // Spectator
     })
 
-
     // @ts-ignore
     if (password && !await handleLogin(client, password, bot.game.height, bot.game.minY, bot.registry.loginPacket.viewDistance))  return
 

@@ -9,12 +9,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.4.2",
-    "mineflayer": "^4.10.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {
     "minecraft-protocol": "^1.43.2",
-    "prismarine-chat": "^1.8.0"
+    "mineflayer": "^4.10.1"
   },
   "scripts": {
     "prepublish": "tsc"
