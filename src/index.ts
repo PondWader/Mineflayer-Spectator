@@ -20,7 +20,6 @@ export type MineflayerSpectatorServer = {
     declareCommands: (commands: Command[]) => void
 }
 
-
 export function startSpectatorServer(bot: mineflayer.Bot, options?: { 
     port?: number, 
     logging?: boolean,  

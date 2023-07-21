@@ -7,6 +7,7 @@ import prismarineChat from "prismarine-chat";
 import { Command, addCommandsToData, commandsToData } from "./commands";
 import { handleLogin } from "./server/login";
 import { _Server } from "./types";
+import { sendInventory } from "./handlers/inventory";
 
 export async function handleClient(client: ServerClient, bot: mineflayer.Bot, server: _Server, commands: Command[], spectatorsCanChat: boolean, password?: string) {
     client.write('login', {
@@ -41,6 +42,7 @@ export async function handleClient(client: ServerClient, bot: mineflayer.Bot, se
 
     sendPlayerList(client, bot)
     sendLoadedEntities(client, bot)
+    sendInventory(client, bot)
 
     client.write('update_time', {
         age: bot.time.age,
