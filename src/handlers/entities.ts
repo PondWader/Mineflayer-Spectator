@@ -206,7 +206,7 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
         }
     })
     
-    if (!bot.inventory) await new Promise(resolve => setImmediate(resolve)) // bot.inventory won't be registered if the bot has just been created
+    if (!bot.inventory) await new Promise<void>(resolve => bot.once('login', resolve)) // bot.inventory won't be registered if the bot has just been created
     
     const SLOT_TO_EQUIPMENT_SLOT: {[x: number]: number} = {
         45: 1,
