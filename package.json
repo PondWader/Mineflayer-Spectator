@@ -1,6 +1,6 @@
 {
   "name": "mineflayer-spectator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Spectate a mineflayer bot in-game",
   "main": "dist",
   "types": "./dist/index.d.ts",
