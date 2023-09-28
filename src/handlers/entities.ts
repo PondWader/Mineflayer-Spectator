@@ -165,6 +165,12 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
         data.passengers = data.passengers.map(alignEntityId)
         server.writeAll('set_passengers', data)
     })
+    bot._client.on('damage_event', data => {
+        data = alignEntityId(data)
+        data.sourceCauseId = data.sourceDirectId === 0 ? 0 : alignEntityId(data.sourceCauseId)
+        data.sourceDirectId = data.sourceDirectId === 0 ? 0 : alignEntityId(data.sourceDirectId)
+        server.writeAll('damage_event', data)
+    })
     server.excludePacketFromProxy('entity_destroy', 'attach_entity', 'set_passengers')
 
     const EVENTS_WITH_ALIGNED_IDS = [
