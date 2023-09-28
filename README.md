@@ -12,7 +12,7 @@ npm i mineflayer-spectator
 # Example usage
 
 ```js
-const { createBot } = require('mineflayer')
+const mineflayer = require('mineflayer')
 const { startSpectatorServer } = require('mineflayer-spectator')
 
 const bot = mineflayer.createBot({
