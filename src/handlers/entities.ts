@@ -16,7 +16,7 @@ export const alignEntityId = <T extends number | { entityId: number }>(entity: T
 
 const formatEntityMetadata = (entity: import('prismarine-entity').Entity, registry: any): any[] => {
     const metadata = entity.metadata
-    const data:{
+    const data: {
         key: number,
         type: string,
         value: any
@@ -35,7 +35,7 @@ const formatEntityMetadata = (entity: import('prismarine-entity').Entity, regist
             type: metadataKeyTypes[i],
             value: v
         })
-    }) 
+    })
     return data
 }
 
@@ -76,9 +76,12 @@ export async function sendLoadedEntities(client: ServerClient, bot: mineflayer.B
             }
         } else {
             if (!entity.entityType) continue
+            // @ts-expect-error - _mineflayerSpectatorEntityTracker is an internal property not specified in types
+            const entityUuidTracker = bot._mineflayerSpectatorEntityUuidTracker as Map<number, string>;
+
             client.write('spawn_entity', {
                 entityId: alignEntityId(entity.id),
-                objectUUID: entity.uuid,
+                objectUUID: entityUuidTracker.get(entity.id),
                 type: entity.entityType,
                 ...entity.position,
                 pitch: toAngle(entity.pitch),
@@ -150,13 +153,24 @@ export async function sendLoadedEntities(client: ServerClient, bot: mineflayer.B
 }
 
 export async function registerEntityListeners(bot: mineflayer.Bot, server: _Server) {
+    // @ts-expect-error - _mineflayerSpectatorEntityTracker is an internal property not specified in types
+    const entityUuidTracker = bot._mineflayerSpectatorEntityUuidTracker = new Map<number, string>();
+
+    // Mineflayer doesn't track the UUID, so we must do it
+    bot._client.on('spawn_entity', (data) => {
+        entityUuidTracker.set(data.entityId, data.objectUUID);
+    })
+
     bot._client.on('entity_destroy', (data) => {
-        data = {...data}
-        data.entityIds = data.entityIds.map(alignEntityId)
+        data = { ...data }
+        data.entityIds = data.entityIds.map((entityId: number) => {
+            entityUuidTracker.delete(entityId);
+            return alignEntityId(entityId)
+        })
         server.writeAll('entity_destroy', data)
     })
     bot._client.on('attach_entity', (data) => {
-        data = {...data}
+        data = { ...data }
         data.vehicleId = alignEntityId(data.vehicleId)
         server.writeAll('attach_entity', alignEntityId(data))
     })
@@ -211,10 +225,10 @@ export async function registerEntityListeners(bot: mineflayer.Bot, server: _Serv
             entityData.metadataKeyTypes[key] = type
         }
     })
-    
+
     if (!bot.inventory) await new Promise<void>(resolve => bot.once('login', resolve)) // bot.inventory won't be registered if the bot has just been created
-    
-    const SLOT_TO_EQUIPMENT_SLOT: {[x: number]: number} = {
+
+    const SLOT_TO_EQUIPMENT_SLOT: { [x: number]: number } = {
         45: 1,
         8: 2,
         7: 3,

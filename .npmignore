@@ -1,2 +1,4 @@
 tsconfig.json
 test.js
+test_server*
+src
